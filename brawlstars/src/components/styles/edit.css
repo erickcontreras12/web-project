@@ -1,0 +1,8 @@
+.body_in_app{
+    width: 100%;
+    background-image: url('../../assets/home_bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+}

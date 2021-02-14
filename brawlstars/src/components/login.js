@@ -1,6 +1,13 @@
 import './styles/login.css';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
+  let history = useHistory();
+
+  const redirect = () => {
+    history.push('/home')
+  }
+
   return (
     <div className="body_login">
       <div className="container-fluid">
@@ -52,7 +59,7 @@ function Login() {
 
             {/* Boton */}
             <div className="row justify-content-center mt-3">
-              <button className="btn btn-primary" type="button">Login</button>
+              <button className="btn btn-primary" type="button" onClick={redirect}>Login</button>
             </div>
 
             {/* Boton */}
