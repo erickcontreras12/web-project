@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; 
+import { BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'; 
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import App from './App';
 import Login from './components/login';
+import Home from './components/home';
 
 ReactDOM.render(
   // <React.StrictMode>
@@ -13,8 +14,10 @@ ReactDOM.render(
   // </React.StrictMode>,
   <Router>
     <Switch>
-      <Route exact path="/" component={App} />
+      {/* <Route exact path="/" component={App} /> */}
       <Route exact path="/login" component={Login} />
+      <Route exact path="/home" component={Home} />
+      <Route render={() => <Redirect to={{pathname: "/login"}} />} />
     </Switch>
   </Router>,  
   
