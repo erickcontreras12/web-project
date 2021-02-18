@@ -1,8 +1,38 @@
-.body_in_app{
-    width: 100%;
-    background-image: url('../../assets/home_bg.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    min-height: 100vh;
-    display: flex;
+.table_form {
+    background: rgba(255, 255, 255, 0.34);
+}
+
+/* MOVIL - IPHONE X */
+
+@media all and (min-width: 300px) {
+    .create-input {
+        width: 400px;
+    }
+
+    .picker-input {
+        height: 15px;
+    }
+
+    .table_form {
+        height: 430px;
+    }
+
+}
+
+
+/* MEDIUM AND LARGE SCREEN */
+
+@media all and (min-width: 768px) {
+    .create-input {
+        width: 400px;
+    }
+
+    .picker-input {
+        height: 33px;
+    }
+
+    .table_form {
+        height: 460px;
+    }
+
 }

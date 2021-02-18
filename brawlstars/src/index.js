@@ -7,6 +7,8 @@ import './index.css';
 import App from './App';
 import Login from './components/login';
 import Home from './components/home';
+import CreateView from './components/create';
+import EditView from './components/edit';
 
 ReactDOM.render(
   // <React.StrictMode>
@@ -17,6 +19,8 @@ ReactDOM.render(
       {/* <Route exact path="/" component={App} /> */}
       <Route exact path="/login" component={Login} />
       <Route exact path="/home" component={Home} />
+      <Route exact path="/create" component={CreateView} />
+      <Route exact path="/edit/1" component={EditView} />
       <Route render={() => <Redirect to={{pathname: "/login"}} />} />
     </Switch>
   </Router>,  

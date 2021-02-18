@@ -1,6 +1,23 @@
 import './styles/home.css';
+import Swal from 'sweetalert2';
 
-function Login() {
+
+function borrar(){
+  Swal.fire({  
+    title: 'Are you sure?',  
+    text: 'Are you sure you want to delete this item?',  
+    icon: 'warning',  
+    showCancelButton: true,  
+    confirmButtonColor: '#3085d6',  
+    cancelButtonColor: '#d33',  
+    confirmButtonText: 'Yes!'  
+  });  
+}
+
+function Home() {
+  let deleteSwal = borrar();
+
+
   return (
     <div className="body_in_app">
       <div className="container-fluid">
@@ -30,9 +47,11 @@ function Login() {
               </div>
               <div className="col-2 col-lg-5"></div>
               <div className="col-5 col-lg-2">
-                <button className="btn btn-rounded btn-orange" >
-                  New Brawler
-                </button>
+                <a href="/create">
+                  <button className="btn btn-rounded btn-orange" >
+                    New Brawler
+                  </button>
+                </a>
               </div>
             </div>
             <div className="row mt-3 table_index">
@@ -53,11 +72,14 @@ function Login() {
                     <td className="text-center">345</td>
                     <td className="text-center">Fast</td>
                     <td className="text-center">
+                      
+                      <a href="/edit/1">
                       <button className="btn btn-sm btn-rounded btn-orange" >
                         Edit
                       </button>
+                      </a>
                       <span className="mr-2"></span>
-                      <button className="btn btn-sm btn-rounded btn-danger" >
+                      <button className="btn btn-sm btn-rounded btn-danger" onClick={deleteSwal}>
                         Delete
                       </button>
                     </td>
@@ -73,4 +95,5 @@ function Login() {
   );
 }
 
-export default Login;
+export default Home;
+
