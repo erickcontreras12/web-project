@@ -1,6 +1,79 @@
 import './styles/edit.css';
+import Swal from 'sweetalert2';
+import { useParams } from 'react-router-dom';
 
 function Edit() {
+
+  let idGlobal = useParams().brawlerID;
+
+  console.log('ID', idGlobal);
+  let element = JSON.parse(window.localStorage.getItem(idGlobal));
+
+  document.addEventListener("DOMContentLoaded", function(event) {
+    function validateForm(){
+      if(document.getElementById('name').value == ''){
+        return false;
+      }
+      if(document.getElementById('health').value == ''){
+        return false;
+      }
+      if(document.getElementById('damage').value == ''){
+        return false;
+      }
+      if(document.getElementById('movement').value == '-1'){
+        return false;
+      }
+      if(document.getElementById('reload').value == '-1'){
+        return false;
+      }
+      if(document.getElementById('super').value == ''){
+        return false;
+      }
+      return true;
+    }
+
+
+    function updateSubmit(){
+      if(!validateForm()){
+        errorSwal();
+        return false;
+      }
+
+      let temp = {
+        'name' : document.getElementById('name').value,
+        'health' : document.getElementById('health').value,
+        'damage' : document.getElementById('damage').value,
+        'movement' : document.getElementById('movement').value,
+        'reload' : document.getElementById('reload').value,
+        'super' : document.getElementById('super').value,
+      }
+
+
+      window.localStorage.setItem(idGlobal, JSON.stringify(temp));
+      Swal.fire({
+        icon: 'success',
+        title: 'Brawler has been updated',
+        showConfirmButton: false,
+        timer: 1500
+      })
+
+      return false;
+    }
+
+    document.getElementById('submitBtn').onclick = updateSubmit;
+  
+  });
+
+  const errorSwal = () => {
+    Swal.fire({
+      title: 'Oh oh!',
+      text: "You cannot left an empty field",
+      icon: 'warning',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Yes!'
+    });
+  }
+
   return (
     <div className="body_in_app">
       <div className="container-fluid">
@@ -46,7 +119,7 @@ function Edit() {
                     <span className="font-weight-bold">Name</span>
                   </div>
                   <div className="col-5 col-lg-8 ml-auto mr-5">
-                    <input type="text" className="rounded border-secondary create-input" value="Colt"></input>
+                    <input type="text" id="name" className="rounded border-secondary create-input" defaultValue={element.name}></input>
                   </div>
                   <div className="col-4 col-lg-1">&nbsp;</div>
                 </div>
@@ -57,7 +130,7 @@ function Edit() {
                     <span className="font-weight-bold">Health</span>
                   </div>
                   <div className="col-5 col-lg-8 ml-auto mr-5">
-                    <input type="number" className="rounded border-secondary create-input" value="3920"></input>
+                    <input type="number" id="health" className="rounded border-secondary create-input" defaultValue={element.health}></input>
                   </div>
                   <div className="col-4 col-lg-1">&nbsp;</div>
                 </div>
@@ -68,7 +141,7 @@ function Edit() {
                     <span className="font-weight-bold">Damage</span>
                   </div>
                   <div className="col-5 col-lg-8 ml-auto mr-5">
-                    <input type="number" className="rounded border-secondary create-input" value="504"></input>
+                    <input type="number" id="damage" className="rounded border-secondary create-input" defaultValue={element.damage}></input>
                   </div>
                   <div className="col-4 col-lg-1">&nbsp;</div>
                 </div>
@@ -79,11 +152,11 @@ function Edit() {
                     <span className="font-weight-bold">Movement Speed</span>
                   </div>
                   <div className="col-5 col-lg-8 ml-auto mr-5 mt-2">
-                    <select className="rounded border-secondary create-input picker-input" placeholder="">
+                    <select id="movement" className="rounded border-secondary create-input picker-input" placeholder="" defaultValue={element.movement}>
                       <option value="-1">Select a speed option...</option>
                       <option value="1">Very Slow</option>
                       <option value="2">Slow</option>
-                      <option value="3" selected>Normal</option>
+                      <option value="3">Normal</option>
                       <option value="4">Fast</option>
                       <option value="5">Very Fast</option>
                     </select>
@@ -97,11 +170,11 @@ function Edit() {
                     <span className="font-weight-bold">Reload Speed</span>
                   </div>
                   <div className="col-5 col-lg-8 ml-auto mr-5 mt-2">
-                    <select className="rounded border-secondary create-input picker-input" placeholder="">
-                      <option value="-1" selected>Select a speed option...</option>
+                    <select id="reload" className="rounded border-secondary create-input picker-input" placeholder="" defaultValue={element.reload}>
+                      <option value="-1">Select a speed option...</option>
                       <option value="1">Very Slow</option>
                       <option value="2">Slow</option>
-                      <option value="3" selected>Normal</option>
+                      <option value="3">Normal</option>
                       <option value="4">Fast</option>
                       <option value="5">Very Fast</option>
                     </select>
@@ -115,17 +188,15 @@ function Edit() {
                     <span className="font-weight-bold">Super</span>
                   </div>
                   <div className="col-5 col-lg-8 ml-auto mr-5">
-                    <input type="text" className="rounded border-secondary create-input" value="Bullet Storm"></input>
+                    <input type="text" id="super" className="rounded border-secondary create-input" defaultValue={element.super}></input>
                   </div>
                   <div className="col-4 col-lg-1">&nbsp;</div>
                 </div>
                 {/* BUTTON */}
                 <div className="row justify-content-center">
-                  <a href="/home">
-                    <button type="button" className="btn btn-rounded btn-orange" >
+                    <button type="button" className="btn btn-rounded btn-orange" id="submitBtn">
                       Save
                   </button>
-                  </a>
                 </div>
               </form>
             </div>

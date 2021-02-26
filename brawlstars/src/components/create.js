@@ -1,6 +1,83 @@
 import './styles/create.css';
+import Swal from 'sweetalert2';
 
 function Create() {
+
+  document.addEventListener("DOMContentLoaded", function(event) {
+    function validateForm(){
+      if(document.getElementById('name').value == ''){
+        return false;
+      }
+      if(document.getElementById('health').value == ''){
+        return false;
+      }
+      if(document.getElementById('damage').value == ''){
+        return false;
+      }
+      if(document.getElementById('movement').value == '-1'){
+        return false;
+      }
+      if(document.getElementById('reload').value == '-1'){
+        return false;
+      }
+      if(document.getElementById('super').value == ''){
+        return false;
+      }
+      return true;
+    }
+
+
+    function updateSubmit(){
+      if(!validateForm()){
+        errorSwal();
+        return false;
+      }
+
+      let temp = {
+        'name' : document.getElementById('name').value,
+        'health' : document.getElementById('health').value,
+        'damage' : document.getElementById('damage').value,
+        'movement' : document.getElementById('movement').value,
+        'reload' : document.getElementById('reload').value,
+        'super' : document.getElementById('super').value,
+      }
+
+      window.localStorage.setItem(window.localStorage.length, JSON.stringify(temp));
+      Swal.fire({
+        icon: 'success',
+        title: 'New brawler created!',
+        showConfirmButton: false,
+        timer: 1500
+      })
+
+      cleanFields();
+      return;
+    }
+
+    function cleanFields(){
+      document.getElementById('name').value = '';
+      document.getElementById('health').value = '';
+      document.getElementById('damage').value = '';
+      document.getElementById('movement').value = '-1';
+      document.getElementById('reload').value = '-1';
+      document.getElementById('super').value = '';
+    }
+
+    document.getElementById('submitBtn').onclick = updateSubmit;
+  });
+
+  const errorSwal = () => {
+    Swal.fire({
+      title: 'Oh oh!',
+      text: "You cannot left an empty field",
+      icon: 'warning',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Yes!'
+    });
+  }
+
+  
+
   return (
     <div className="body_in_app">
       <div className="container-fluid">
@@ -38,7 +115,7 @@ function Create() {
               </div>
             </div>
             <div className="row mt-2 table_form justify-content-center">
-              <form>
+              <form id="form">
                 {/* NAME */}
                 <div className="row mt-5 text-center">
                   <div className="col-1 col-lg-1">&nbsp;</div>
@@ -46,7 +123,7 @@ function Create() {
                     <span className="font-weight-bold">Name</span>
                   </div>
                   <div className="col-5 col-lg-8 ml-auto mr-5">
-                    <input type="text" className="rounded border-secondary create-input"></input>
+                    <input type="text" id="name" className="rounded border-secondary create-input"></input>
                   </div>
                   <div className="col-4 col-lg-1">&nbsp;</div>
                 </div>
@@ -57,7 +134,7 @@ function Create() {
                     <span className="font-weight-bold">Health</span>
                   </div>
                   <div className="col-5 col-lg-8 ml-auto mr-5">
-                    <input type="number" className="rounded border-secondary create-input"></input>
+                    <input type="number" id="health" className="rounded border-secondary create-input"></input>
                   </div>
                   <div className="col-4 col-lg-1">&nbsp;</div>
                 </div>
@@ -68,7 +145,7 @@ function Create() {
                     <span className="font-weight-bold">Damage</span>
                   </div>
                   <div className="col-5 col-lg-8 ml-auto mr-5">
-                    <input type="number" className="rounded border-secondary create-input"></input>
+                    <input type="number" id="damage" className="rounded border-secondary create-input"></input>
                   </div>
                   <div className="col-4 col-lg-1">&nbsp;</div>
                 </div>
@@ -79,7 +156,7 @@ function Create() {
                     <span className="font-weight-bold">Movement Speed</span>
                   </div>
                   <div className="col-5 col-lg-8 ml-auto mr-5 mt-2">
-                    <select className="rounded border-secondary create-input picker-input" placeholder="">
+                    <select id="movement" className="rounded border-secondary create-input picker-input" placeholder="">
                       <option value="-1" selected>Select a speed option...</option>
                       <option value="1">Very Slow</option>
                       <option value="2">Slow</option>
@@ -97,7 +174,7 @@ function Create() {
                     <span className="font-weight-bold">Reload Speed</span>
                   </div>
                   <div className="col-5 col-lg-8 ml-auto mr-5 mt-2">
-                    <select className="rounded border-secondary create-input picker-input" placeholder="">
+                    <select id="reload" className="rounded border-secondary create-input picker-input" placeholder="">
                       <option value="-1" selected>Select a speed option...</option>
                       <option value="1">Very Slow</option>
                       <option value="2">Slow</option>
@@ -115,17 +192,15 @@ function Create() {
                     <span className="font-weight-bold">Super</span>
                   </div>
                   <div className="col-5 col-lg-8 ml-auto mr-5">
-                    <input type="text" className="rounded border-secondary create-input"></input>
+                    <input type="text" id="super" className="rounded border-secondary create-input"></input>
                   </div>
                   <div className="col-4 col-lg-1">&nbsp;</div>
                 </div>
                 {/* BUTTON */}
                 <div className="row justify-content-center">
-                  <a href="/home">
-                    <button type="button" className="btn btn-rounded btn-orange" >
+                    <button type="button" className="btn btn-rounded btn-orange" id="submitBtn" >
                       Create
                   </button>
-                  </a>
                 </div>
               </form>
             </div>

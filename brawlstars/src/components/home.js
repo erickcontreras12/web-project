@@ -1,45 +1,41 @@
 import './styles/home.css';
 import Swal from 'sweetalert2';
 
-var myStorage = window.localStorage;
 
 function Home() {
 
-  let Colt = { 'name': 'Colt', 'health': 3920, 'damage': 504, 'movement': 'Normal', 'reload': 'Normal', 'super': 'Bullet Storm' };
-  let Shelly = { 'name': 'Shelly', 'health': 5320, 'damage': 420, 'movement': 'Normal', 'reload': 'Normal', 'super': 'Super Shell' };
-  let Brock = { 'name': 'Brock', 'health': 3360, 'damage': 1456, 'movement': 'Normal', 'reload': 'Slow', 'super': 'Rocket Rain' };
-  let Nita = { 'name': 'Nita', 'health': 5600, 'damage': 1232, 'movement': 'Normal', 'reload': 'Very Fast', 'super': 'Overbearing' };
-  let Dinamyke = { 'name': 'Dynamike', 'health': 3920, 'damage': 1120, 'movement': 'Normal', 'reload': 'Normal', 'super': 'Big Barrel O Boom' };
-
-  myStorage.setItem(0, JSON.stringify(Colt));
-  myStorage.setItem(1, JSON.stringify(Shelly));
-  myStorage.setItem(2, JSON.stringify(Brock));
-  myStorage.setItem(3, JSON.stringify(Nita));
-  myStorage.setItem(4, JSON.stringify(Dinamyke));
-
-  const deleteSwal = () => {
+  const deleteSwal = (data) => {
     Swal.fire({
-      title: 'STOP!',
-      text: 'Are you sure you want to delete this brawler?',
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes!'
-    });
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+        document.getElementById('row_'+data.target.id.substring(4, data.target.id.length)).remove();
+        window.localStorage.removeItem(data.target.id.substring(4, data.target.id.length));
+      }
+    })
   }
-
-  console.log('myStorage', myStorage.length);
+  console.log('myStorage', window.localStorage.length);
 
   document.addEventListener("DOMContentLoaded", function(event) {
-    for (let i = 0; i < myStorage.length; i++) {
-      let element = JSON.parse(myStorage.getItem(i));
+    for (let i = 0; i < window.localStorage.length; i++) {
+      let element = JSON.parse(window.localStorage.getItem(i));
       console.log(element);
       var row = document.createElement('tr');
-  
+      row.id = "row_"+i;
       var col = document.createElement('td'); //Name
       col.classList.add('text-center');
-      col.innerHTML = element["name"];
+      col.innerHTML = element.name;
       row.appendChild(col);
   
       var col = document.createElement('td'); //Health
@@ -54,14 +50,32 @@ function Home() {
   
       var col = document.createElement('td'); //Movement
       col.classList.add('text-center');
-      col.appendChild(document.createTextNode(element.movement));
+      var movement = '';
+      switch(element.movement){
+        case 1:
+          movement = 'Very Slow';
+          break;
+        case 2:
+          movement = 'Slow';
+          break;
+        case 3:
+          movement = 'Normal';
+          break;
+        case 4:
+          movement = 'Fast';
+          break;
+        default:
+          movement = 'Very Fast';
+          break;
+      }
+      col.appendChild(document.createTextNode(movement));
       row.appendChild(col);
   
       
       var col = document.createElement('td'); //Actions
       col.classList.add('text-center');
       var a = document.createElement('a');
-      a.href = "/edit/1";
+      a.href = "/edit/"+i;
 
       var editB = document.createElement('button');
       editB.classList.add('btn');
@@ -81,16 +95,17 @@ function Home() {
       deleteB.classList.add('btn-danger');
       deleteB.onclick = deleteSwal;
       deleteB.innerHTML = 'Delete';
+      deleteB.id = 'btn_'+i;
 
       col.appendChild(a);
       col.appendChild(span);
       col.appendChild(deleteB);
-      row.appendChild(col);
-  
-      console.log('Fila ' + i, row);
-  
+      row.appendChild(col);  
       document.getElementById('tBody').appendChild(row);
     }
+
+
+    
   });
 
   
