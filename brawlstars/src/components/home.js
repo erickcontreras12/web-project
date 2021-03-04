@@ -26,10 +26,14 @@ function Home() {
     })
   }
   console.log('myStorage', window.localStorage.length);
-
+  let count = window.localStorage.length;
   document.addEventListener("DOMContentLoaded", function(event) {
-    for (let i = 0; i < window.localStorage.length; i++) {
+    for (let i = 0; i < count; i++) {
       let element = JSON.parse(window.localStorage.getItem(i));
+      if(element == null){
+        count++;
+        continue;
+      }
       console.log(element);
       var row = document.createElement('tr');
       row.id = "row_"+i;
