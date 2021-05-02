@@ -1,0 +1,11 @@
+.nav-crud {
+  background: rgba(1, 153, 228, 1);
+  height: 55px;
+}
+
+
+.logout-link {
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
