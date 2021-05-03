@@ -20,7 +20,6 @@ class Edit extends Component {
         let data = res.data.values;
         data.movement = data.movement.toString();
         data.reload = data.reload.toString();
-        console.log('Data', data);
         this.setState({ brawler: data });
       });
   }

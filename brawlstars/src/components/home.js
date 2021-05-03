@@ -1,63 +1,60 @@
-import { React, Component } from "react";
+import { React, useState, useEffect } from "react";
 import './styles/home.css';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import Navbar from './nabvar';
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
+export default function Home() {
+  // const [deletedClick, setDeletedClick] = useState(false);
+  // const [loaded, setLoaded] = useState(false);
+  const [brawlers, setBrawlers] = useState([]);
 
-    this.state = {
-      brawlers: []
-    };
-  }
+  useEffect(() => {    
+    makeBrawlersRequest();
+  }, [])
 
-  componentDidMount() {
-    this.makeBrawlersRequest();
-  }
-
-  makeBrawlersRequest() {
+  function makeBrawlersRequest() {
     axios.get(`http://localhost:4000/brawlers/getAll`)
       .then(res => {
-        this.setState({ brawlers: res.data.values });
+        setBrawlers(res.data.values);
       });
   }
 
-  deleteSwal(data) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios.delete(`http://localhost:4000/brawlers/delete/${data}`)
-          .then(res => {
-            this.makeBrawlersRequest();
-            Swal.fire(
-              'Deleted!',
-              'Your file has been deleted.',
-              'success'
-            );
-          });
-
-      }
-    })
+  function deleteSwal(data){
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.delete(`http://localhost:4000/brawlers/delete/${data}`)
+            .then(res => {
+              makeBrawlersRequest();
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              );
+            });
+  
+        }
+      });
+    
   }
 
-  setTableBody() {
-    if (this.state.brawlers) {
-      return this.state.brawlers.map(item =>
+  function setTableBody() {
+    if (brawlers.length != 0) {
+      return brawlers.map(item =>
         <tr key={item._id}>
           <td className="text-center">{item.name}</td>
           <td className="text-center">{item.health}</td>
           <td className="text-center">{item.damage}</td>
-          <td className="text-center">{this.getSpeedName(item.movement)}</td>
-          <td className="text-center">{this.getSpeedName(item.reload)}</td>
+          <td className="text-center">{getSpeedName(item.movement)}</td>
+          <td className="text-center">{getSpeedName(item.reload)}</td>
           <td className="text-center">{item.super}</td>
           <td className="text-center">
             <a href={'/edit/' + item._id}>
@@ -66,16 +63,16 @@ class Home extends Component {
               </button>
             </a>
             <span className="mr-2"></span>
-            <button className="btn btn-sm btn-rounded btn-danger" onClick={() => this.deleteSwal(item._id)}>
+            <button className="btn btn-sm btn-rounded btn-danger" id="" onClick={() => deleteSwal(item._id)}>
               Delete
-              </button>
+            </button>
           </td>
-        </tr>
+        </tr >
       );
     }
   }
 
-  getSpeedName(movement) {
+  function getSpeedName(movement) {
     switch (movement) {
       case 1:
         return 'Very Slow';
@@ -92,47 +89,46 @@ class Home extends Component {
     }
   }
 
-  render() {
-    return (
-      <Navbar>
-        <div className="row mt-2">&nbsp;</div>
-        <div className="row mt-3">
-          <div className="col-5 col-lg-5 text-position">
-            <span className="inner-title">
-              Pick your brawler
+
+  return (
+    <Navbar>
+      <div className="row mt-2">&nbsp;</div>
+      <div className="row mt-3">
+        <div className="col-5 col-lg-5 text-position">
+          <span className="inner-title">
+            Pick your brawler
                     </span>
-          </div>
-          <div className="col-2 col-lg-5"></div>
-          <div className="col-5 col-lg-2">
-            <a href="/create">
-              <button className="btn btn-rounded btn-orange" >
-                New Brawler
+        </div>
+        <div className="col-2 col-lg-5"></div>
+        <div className="col-5 col-lg-2">
+          <a href="/create">
+            <button className="btn btn-rounded btn-orange" >
+              New Brawler
                     </button>
-            </a>
-          </div>
+          </a>
         </div>
-        <div className="row mt-3 table_index tableFixHead">
-          <table className="table table-hover">
-            <thead>
-              <tr>
-                <th className="text-center">Name</th>
-                <th className="text-center">Health</th>
-                <th className="text-center">Damage</th>
-                <th className="text-center">Movement Speed</th>
-                <th className="text-center">Reload Speed</th>
-                <th className="text-center">Super</th>
-                <th className="text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="tBody">
-              {this.setTableBody()}
-            </tbody>
-          </table>
-        </div>
-      </Navbar>
-    );
-  }
+      </div>
+      <div className="row mt-3 table_index tableFixHead">
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th className="text-center">Name</th>
+              <th className="text-center">Health</th>
+              <th className="text-center">Damage</th>
+              <th className="text-center">Movement Speed</th>
+              <th className="text-center">Reload Speed</th>
+              <th className="text-center">Super</th>
+              <th className="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tBody">
+            {setTableBody()}
+          </tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+    </Navbar>
+  )
 }
 
-export default Home;
 
