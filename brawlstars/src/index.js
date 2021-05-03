@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
 import Login from "./components/login";
 import Register from "./components/register";
+import resetPassword from "./components/resetPassword";
 import Home from "./components/home";
 import CreateView from "./components/create";
 import EditView from "./components/edit";
@@ -18,6 +19,7 @@ ReactDOM.render(
         {/* <Route exact path="/" component={App} /> */}
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/resetPassword" component={resetPassword} />
         <PrivateRoute exact path="/home" component={Home} />
         <PrivateRoute exact path="/create" component={CreateView} />
         <PrivateRoute exact path="/edit/:brawlerID" component={EditView} />

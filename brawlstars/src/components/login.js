@@ -108,7 +108,7 @@ export default function Login() {
 
         {/* Boton */}
         <div className="row justify-content-center mt-2">
-          <a className="link ">Forgot password?</a>
+          <a className="link" href="/resetPassword">Forgot password?</a>
         </div>
 
       </div>
