@@ -41,25 +41,29 @@
     }
 
     .table_index {
-        height: 550px;
-        max-height: 550px;
+        height: 525px;
+        max-height: 525px;
         margin-left: 5px;
         margin-right: 5px;
     }
 
     .inner-title {
         font-style: normal;
-        font-size: 24px;
+        font-size: 16px;
         text-align: center;
         color: #FFFFFF;
         align-content: center;
-        padding-left: 15px;
+        padding-left: 14px;
+        line-height: 1px;
     }
 
     .text-position{
-        text-align: center;
+        text-align: left;
     }
 
+    .no-display-mb{
+        display: none;
+    }
 }
 
 
@@ -77,8 +81,20 @@
         max-height: 430px;
     }
 
+    .inner-title {
+        font-style: normal;
+        font-size: 24px;
+        text-align: center;
+        color: #FFFFFF;
+        align-content: center;
+        padding-left: 15px;
+    }
     
     .text-position{
         text-align: left;
+    }
+
+    .display-mb{
+        display: none;
     }
 }

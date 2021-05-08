@@ -15,7 +15,7 @@ class Edit extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://localhost:4000/brawlers/getOne/${this.state.brawlerID}`)
+    axios.get(`http://192.168.1.11:4001/brawlers/getOne/${this.state.brawlerID}`)
       .then(res => {
         let data = res.data.values;
         data.movement = data.movement.toString();
@@ -71,7 +71,7 @@ class Edit extends Component {
       'super': document.getElementById('super').value,
     }
 
-    axios.patch(`http://localhost:4000/brawlers/update/${this.state.brawlerID}`, { brawler })
+    axios.patch(`http://192.168.1.11:4001/brawlers/update/${this.state.brawlerID}`, { brawler })
       .then(res => {
         Swal.fire({
           icon: 'success',

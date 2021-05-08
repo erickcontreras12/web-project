@@ -6,15 +6,15 @@
 
 @media all and (min-width: 300px) {
     .create-input {
-        width: 400px;
+        width: 170px;
     }
 
     .picker-input {
-        height: 15px;
+        height: 32px;
     }
 
     .table_form {
-        height: 430px;
+        height: 480px;
     }
 
 }

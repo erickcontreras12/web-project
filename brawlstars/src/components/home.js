@@ -14,7 +14,7 @@ export default function Home() {
   }, [])
 
   function makeBrawlersRequest() {
-    axios.get(`http://localhost:4000/brawlers/getAll`)
+    axios.get(`http://192.168.1.11:4001/brawlers/getAll`)
       .then(res => {
         setBrawlers(res.data.values);
       });
@@ -31,7 +31,7 @@ export default function Home() {
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.isConfirmed) {
-          axios.delete(`http://localhost:4000/brawlers/delete/${data}`)
+          axios.delete(`http://192.168.1.11:4001/brawlers/delete/${data}`)
             .then(res => {
               makeBrawlersRequest();
               Swal.fire(
@@ -94,14 +94,20 @@ export default function Home() {
     <Navbar>
       <div className="row mt-2">&nbsp;</div>
       <div className="row mt-3">
-        <div className="col-5 col-lg-5 text-position">
+        <div className="col-xs-12 col-sm-12 col-md-5 col-lg-5 text-position">
           <span className="inner-title">
             Pick your brawler
-                    </span>
+          </span>
+          <span className="display-mb ml-5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <a href="/create" className="display-mb">
+            <button className="btn btn-rounded btn-orange" >
+              New Brawler
+                    </button>
+          </a>
         </div>
-        <div className="col-2 col-lg-5"></div>
-        <div className="col-5 col-lg-2">
-          <a href="/create">
+        <div className="col-lg-5"></div>
+        <div className="col-lg-2">
+          <a href="/create" className="no-display-mb">
             <button className="btn btn-rounded btn-orange" >
               New Brawler
                     </button>
