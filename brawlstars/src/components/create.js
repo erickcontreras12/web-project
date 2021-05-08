@@ -56,7 +56,7 @@ class Create extends Component {
       'super': document.getElementById('super').value,
     }
 
-    axios.post(`http://192.168.1.11:4001/brawlers/create`, { brawler })
+    axios.post(`http://localhost:4001/brawlers/create`, { brawler })
       .then(res => {
         console.log(res.data.status);
         Swal.fire({
