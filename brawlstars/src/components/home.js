@@ -110,7 +110,7 @@ export default function Home() {
           <a href="/create" className="no-display-mb">
             <button className="btn btn-rounded btn-orange" >
               New Brawler
-                    </button>
+            </button>
           </a>
         </div>
       </div>

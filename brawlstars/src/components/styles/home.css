@@ -97,4 +97,8 @@
     .display-mb{
         display: none;
     }
+
+    .no-display-mb{
+        display: block;
+    }
 }
