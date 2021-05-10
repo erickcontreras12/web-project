@@ -14,7 +14,7 @@ export default function Home() {
   }, [])
 
   function makeBrawlersRequest() {
-    axios.get(`http://localhost:4001/brawlers/getAll`)
+    axios.get(`http://bs-apiBalancer-113697783.us-east-2.elb.amazonaws.com:4000/brawlers/getAll`)
       .then(res => {
         setBrawlers(res.data.values);
       });
@@ -31,7 +31,7 @@ export default function Home() {
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.isConfirmed) {
-          axios.delete(`http://localhost:4001/brawlers/delete/${data}`)
+          axios.delete(`http://bs-apiBalancer-113697783.us-east-2.elb.amazonaws.com:4000/brawlers/delete/${data}`)
             .then(res => {
               makeBrawlersRequest();
               Swal.fire(
